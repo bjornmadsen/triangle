@@ -46,7 +46,16 @@ triangle = [
 ]
 
 [tool.cibuildwheel]
-skip = ['pp*', '*musllinux*']
-test-skip = ['*-manylinux_i686']
-test-requires = 'pytest'
-test-command = 'pytest {project}/tests'
+build = ["cp311-*", "cp312-*", "cp313-*", "cp314-*"]
+skip = ["pp*", "*musllinux*", "*-manylinux_i686", "*-win32"]
+test-requires = "pytest"
+test-command = "pytest {project}/tests"
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64", "aarch64"]
+
+[tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]
+
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]

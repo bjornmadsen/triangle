@@ -4,6 +4,11 @@ on:
   push:
     tags: ["v*"]
 
+# Opt into Node.js 24 now — actions/setup-python (used internally by
+# cibuildwheel) is still on Node.js 20 and would otherwise warn.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build_wheels:
     name: ${{ matrix.os }}

@@ -49,3 +49,26 @@ jobs:
         with:
           files: dist/*
           generate_release_notes: true
+
+  publish_jfrog:
+    name: Publish to JFrog
+    needs: build_wheels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: astral-sh/setup-uv@v5
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: wheels-*
+          path: dist/
+          merge-multiple: true
+
+      - name: Upload wheels to JFrog
+        env:
+          JFROG_USER: ${{ secrets.JFROG_USER }}
+          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
+        run: |
+          uvx twine upload \
+            --repository-url https://locusbots.jfrog.io/artifactory/api/pypi/locus-triangle/ \
+            -u "$JFROG_USER" -p "$JFROG_TOKEN" \
+            dist/*.whl

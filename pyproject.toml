@@ -47,7 +47,7 @@ triangle = [
 
 [tool.cibuildwheel]
 build = ["cp311-*", "cp312-*", "cp313-*", "cp314-*"]
-skip = ["pp*", "*musllinux*", "*-manylinux_i686", "*-win32"]
+skip = ["*musllinux*", "*-manylinux_i686", "*-win32"]
 test-requires = "pytest"
 test-command = "pytest {project}/tests"
 

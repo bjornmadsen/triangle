@@ -1,4 +1,16 @@
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext as _build_ext
+
+
+class build_ext(_build_ext):
+    def build_extensions(self):
+        # Triangle's exact-arithmetic predicates need unfused floating
+        # point. GCC (aarch64) and clang contract a*b+c into FMA by
+        # default, which breaks them and can hang mergehulls().
+        if self.compiler.compiler_type != 'msvc':
+            for ext in self.extensions:
+                ext.extra_compile_args.append('-ffp-contract=off')
+        super().build_extensions()
 
 
 define_macros = [
@@ -23,4 +35,5 @@ ext_modules = [
 setup(
     name='triangle',
     ext_modules=ext_modules,
+    cmdclass={'build_ext': build_ext},
 )

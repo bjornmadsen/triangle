@@ -8,7 +8,7 @@ git push origin v20250420
 ```
 
 This triggers `.github/workflows/wheels.yml`, which:
-1. Builds wheels for **cp311, cp312, cp313, cp314** across:
+1. Builds wheels for **cp311, cp312, cp313, cp314, cp315** across:
    - Linux x86_64 + aarch64
    - macOS Intel (x86_64) + Apple Silicon (arm64)
    - Windows AMD64

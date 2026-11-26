@@ -4,11 +4,6 @@ on:
   push:
     tags: ["v*"]
 
-# Opt into Node.js 24 now — actions/setup-python (used internally by
-# cibuildwheel) is still on Node.js 20 and would otherwise warn.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build_wheels:
     name: ${{ matrix.os }}
@@ -16,9 +11,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # ubuntu-latest (x86_64) and ubuntu-24.04-arm (aarch64) each build
-        # for their native arch — no QEMU emulation needed.
-        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-14]
+        # Each runner builds for its native arch, so no QEMU emulation:
+        # Linux x86_64 and aarch64, Windows AMD64, macOS arm64.
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v7

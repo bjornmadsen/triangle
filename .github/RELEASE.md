@@ -10,9 +10,10 @@ git push origin v20250420
 This triggers `.github/workflows/wheels.yml`, which:
 1. Builds wheels for **cp311, cp312, cp313, cp314, cp315** across:
    - Linux x86_64 + aarch64
-   - macOS Intel (x86_64) + Apple Silicon (arm64)
+   - macOS Apple Silicon (arm64)
    - Windows AMD64
 2. Publishes all wheels to a **GitHub Release** with auto-generated notes.
+3. Uploads all wheels to JFrog (`locus-triangle`).
 
 ## Version string
 
@@ -32,5 +33,5 @@ cibuildwheel --platform linux   # requires Docker
 ## Dependencies
 
 - [`pypa/cibuildwheel`](https://github.com/pypa/cibuildwheel) — builds the wheels
-- [`docker/setup-qemu-action`](https://github.com/docker/setup-qemu-action) — enables Linux aarch64 cross-compilation
-- C source: [`drufat/triangle-c`](https://github.com/drufat/triangle-c) submodule in `c/`
+- C source: [`bjornmadsen/triangle-c`](https://github.com/bjornmadsen/triangle-c) submodule in `c/`
+  (fork of `drufat/triangle-c` with crash and hang fixes)
